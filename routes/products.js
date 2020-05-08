@@ -8,11 +8,12 @@ const Cart = require('../models/cart');
 //insert a new product
 router.post('/add', (req, res, next) => {
     let newProduct = new Product({
-        name: req.body.name,
-        pricePerUnit: req.body.pricePerUnit,
-        minOrder: req.body.minOrder,
+        productName: req.body.productName,
+        unitPrice: req.body.unitPrice,
+        minimumOrder: req.body.minimumOrder,
         category: req.body.category,
-        availability: req.body.availability
+        availability: req.body.availability,
+        imgSrc : req.body.imgSrc
     });
 
     newProduct.save()
@@ -71,12 +72,12 @@ router.delete('/:id', (req, res, next) => {
 router.post('/update/:id', (req, res, next) => {
     Product.findById(req.params.id)
         .then((product) => {
-            product.name = req.body.name;
-            product.pricePerUnit = req.body.pricePerUnit;
-            product.minOrder = req.body.minOrder;
+            product.productName = req.body.productName;
+            product.unitPrice = req.body.unitPrice;
+            product.minimumOrder = req.body.minimumOrder;
             product.category = req.body.category;
             product.availability = req.body.availability;
-
+        
             product.save()
                 .then(() => {
                     res.status(201).json({
