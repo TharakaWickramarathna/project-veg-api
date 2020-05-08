@@ -1,14 +1,22 @@
 const _ = require('underscore');
+
 //Generate Amount of the Pack
+
 function getAmountOfThePack(resultingArrayFromTheDB) {
     const productList = _.pluck(resultingArrayFromTheDB, "products");
     var amounts = [];
-    productList.reduce((listNumber, list) => {
-        const totalAmount = list.reduce((total, product) => {
-            return total += product._id.unitPrice * product.quantity;
-        }, 0)
-        return amounts[listNumber] = totalAmount*10;
-    }, 0)
+    
+    productList.forEach((item)=>{
+
+        total =0;
+        item.forEach((product)=>{
+            var price =product._id.unitPrice*product.quantity;
+            total += price;
+           
+        });
+        let num = productList.indexOf(item);
+        amounts[num] = total;
+    });   
     return amounts;
 }
 
@@ -16,19 +24,20 @@ function getAmountOfThePack(resultingArrayFromTheDB) {
 
 function generateObject(fromThisArray, amountList) {
     var result = [];
-    fromThisArray.reduce((itemNumber, item) => {
-        item = {
-            availability: item.availability,
-            _id: item._id,
-            name: item.name,
-            clientID: item.clientID,
-            products: item.products,
-            date: item.date,
-            amount: amountList[itemNumber]
+    fromThisArray.forEach((listItem)=>{
+        let num = fromThisArray.indexOf(listItem);
+        listItem ={
+            availability: listItem.availability,
+            _id: listItem._id,
+            name: listItem.name,
+            clientID: listItem.clientID,
+            products: listItem.products,
+            date: listItem.date,
+            amount: amountList[num]
         }
-        return result[itemNumber] = item;
-
-    }, 0);
+        result[num] = listItem;
+    });
+    
     return result;
 }
 
@@ -36,20 +45,23 @@ function generateObject(fromThisArray, amountList) {
 
 function generateObjectS(fromThisArray, amountList) {
     var result = [];
-    fromThisArray.reduce((itemNumber, item) => {
-        item = {
-            availability: item.availability,
-            _id: item._id,
-            name: item.name,
-            discount: item.discount,
-            products: item.products,
-            date: item.date,
-            amount: amountList[itemNumber]
-        }
-        return result[itemNumber] = item;
+    fromThisArray.forEach((listItem)=>{
+        let num = fromThisArray.indexOf(listItem);
 
-    }, 0);
+        listItem={
+            availability: listItem.availability,
+            _id: listItem._id,
+            name: listItem.name,
+            discount: listItem.discount,
+            products: listItem.products,
+            date: listItem.date,
+            amount: amountList[num]
+        }
+        result[num]= listItem;
+
+    });    
     return result;
+    
 }
 
 module.exports.getAmountOfThePack = getAmountOfThePack;
