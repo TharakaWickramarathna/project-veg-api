@@ -7,7 +7,7 @@ function getAmountOfThePack(resultingArrayFromTheDB) {
         const totalAmount = list.reduce((total, product) => {
             return total += product._id.unitPrice * product.quantity;
         }, 0)
-        return amounts[listNumber] = totalAmount;
+        return amounts[listNumber] = totalAmount*10;
     }, 0)
     return amounts;
 }
