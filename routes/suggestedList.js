@@ -10,11 +10,14 @@ const hero = require('../extras/scripts');
 //Views all of the suggested lists
 router.get('/view', async(req, res) => {
     const suggestedList = await SuggestedList.find().populate('products._id');
-    const lengthOfS = suggestedList.length;
-    const amount = hero.getAmountOfThePack(suggestedList);
-    const result = hero.generateObjectS(suggestedList, amount);
-
-    res.json(result);
+    if (suggestedList.length === 0){
+        res.json('No Entries were found in the DB')
+    }else{
+        const amount = hero.getAmountOfThePack(suggestedList);
+    const results = hero.generateObjectS(suggestedList, amount);
+    res.json(results);
+    }
+    
 });
 
 //Save a new pack to the database
