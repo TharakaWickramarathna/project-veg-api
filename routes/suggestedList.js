@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const _ = require('underscore');
 const SuggestedList = require('../models/suggestedList');
 const Products = require('../models/products');
-const hero = require('../Extras/scripts');
+const hero = require('../extras/scripts');
 
 
 //Views all of the suggested lists

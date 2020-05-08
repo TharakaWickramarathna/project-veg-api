@@ -4,7 +4,7 @@ const ProductListItem = mongoose.Schema({
 
     _id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Products',
+        ref: 'Product',
         required: true
     },
     quantity: {
