@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const _ = require('underscore');
 const FavouriteList = require('../models/favouriteList');
 const Products = require('../models/products');
-const hero = require('../Extras/scripts');
+const hero = require('../extras/scripts');
 
 //Request all the favourite packs from the database (For Admins)
 router.get('/view', async(req, res) => {

@@ -2,15 +2,16 @@ const mongoose = require('mongoose');
 
 //User Schema
 const ProductSchema = mongoose.Schema({
-    name: {
+   
+    productName: {
         type: String
             // required: true
     },
-    pricePerUnit: {
+    unitPrice: {
         type: Number,
         required: true
     },
-    minOrder: {
+    minimumOrder: {
         type: Number,
         required: true
     },
@@ -21,6 +22,10 @@ const ProductSchema = mongoose.Schema({
     availability: {
         type: Boolean,
         required: true
+    },
+    imgSrc:{
+        type: String,
+        required : true
     }
 });
 
