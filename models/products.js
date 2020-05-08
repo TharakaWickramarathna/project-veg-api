@@ -34,7 +34,7 @@ const Product = module.exports = mongoose.model('Product', ProductSchema);
 module.exports.getProductById = function(id, callback) {
     User.findById(id, this.callback);
 }
-module.exports.getProductByName = function(name, callback) {
-    const query = { name: name };
+module.exports.getProductByName = function(productName, callback) {
+    const query = { productName: productName};
     User.findByEmail(query, callback);
 }
