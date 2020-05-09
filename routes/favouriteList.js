@@ -80,7 +80,7 @@ router.patch('/edit/:packID', async(req, res) => {
     try {
 
         const editedPack = await FavouriteList.update({ _id: req.params.packID }, {
-            $res: {
+            $set: {
                 name: req.body.name,
                 clientID: req.body.clientID,
                 availability: req.body.availability,

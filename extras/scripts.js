@@ -15,7 +15,7 @@ function getAmountOfThePack(resultingArrayFromTheDB) {
            
         });
         let num = productList.indexOf(item);
-        amounts[num] = total*10;
+        amounts[num] = total/100;
     });   
     return amounts;
 }
