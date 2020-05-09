@@ -14,8 +14,8 @@ router.get('/view', async(req, res) => {
         res.json('No Entries were found in the DB')
     }else{
         const amount = hero.getAmountOfThePack(suggestedList);
-    const results = hero.generateObjectS(suggestedList, amount);
-    res.json(results);
+        const results = hero.generateObjectS(suggestedList, amount);
+        res.json(results);
     }
     
 });

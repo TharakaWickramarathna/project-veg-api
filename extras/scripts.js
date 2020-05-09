@@ -15,7 +15,7 @@ function getAmountOfThePack(resultingArrayFromTheDB) {
            
         });
         let num = productList.indexOf(item);
-        amounts[num] = total;
+        amounts[num] = total*10;
     });   
     return amounts;
 }
@@ -34,6 +34,7 @@ function generateObject(fromThisArray, amountList) {
             products: listItem.products,
             date: listItem.date,
             amount: amountList[num]
+
         }
         result[num] = listItem;
     });
@@ -47,7 +48,9 @@ function generateObjectS(fromThisArray, amountList) {
     var result = [];
     fromThisArray.forEach((listItem)=>{
         let num = fromThisArray.indexOf(listItem);
-
+        var amount = amountList[num];
+        let discountAmount = (listItem.discount/100) * amount;
+        let total = amount - discountAmount;
         listItem={
             availability: listItem.availability,
             _id: listItem._id,
@@ -55,7 +58,9 @@ function generateObjectS(fromThisArray, amountList) {
             discount: listItem.discount,
             products: listItem.products,
             date: listItem.date,
-            amount: amountList[num]
+            amount: amount,
+            discountAmount : discountAmount,
+            total: total
         }
         result[num]= listItem;
 
