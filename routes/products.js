@@ -77,6 +77,7 @@ router.post('/update/:id', (req, res, next) => {
             product.minimumOrder = req.body.minimumOrder;
             product.category = req.body.category;
             product.availability = req.body.availability;
+            product.imgSrc = req.body.imgSrc
         
             product.save()
                 .then(() => {
