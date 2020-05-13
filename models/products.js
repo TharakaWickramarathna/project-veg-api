@@ -21,7 +21,8 @@ const ProductSchema = mongoose.Schema({
     },
     availability: {
         type: Boolean,
-        required: true
+        required: true,
+        default : true
     },
     imgSrc:{
         type: String,

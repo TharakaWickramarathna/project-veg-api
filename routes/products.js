@@ -1,19 +1,47 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req,file,cb){
+        cb(null,'./uploads');
+    },
+    filename: function(req,file,cb){
+        cb(null, file.originalname);
+    }
+});
+
+const fileFilter = (req,file,cb)=>{
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+        cb(null, true);
+    }else{
+        cb(null, false)
+    }
+};
+
+const upload = multer({
+    storage: storage,
+    limits:{
+        fileSize: 1024 * 1024 * 2
+    },
+    fileFilter:fileFilter
+
+});
 
 const Product = require('../models/products');
 const Cart = require('../models/cart');
 
 
 //insert a new product
-router.post('/add', (req, res, next) => {
+router.post('/add',upload.single('productImage'), (req, res, next) => {
+    console.log(req.file)
     let newProduct = new Product({
         productName: req.body.productName,
         unitPrice: req.body.unitPrice,
         minimumOrder: req.body.minimumOrder,
         category: req.body.category,
         availability: req.body.availability,
-        imgSrc : req.body.imgSrc
+        imgSrc : req.file.path
     });
 
     newProduct.save()

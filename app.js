@@ -30,6 +30,7 @@ const app = express();
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
+app.use('/uploads',express.static('uploads'));
 
 const users = require('./routes/users')
 const products = require('./routes/products');
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //body parser middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
 
 // express session middleware
 app.use(session({
