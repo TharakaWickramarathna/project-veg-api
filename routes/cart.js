@@ -15,10 +15,10 @@ router.get('/details', (req, res, next) => {
 });
 
 router.post('/add', (req, res, next) => {
-    var cart = new Cart(req.session.cart);
+    // var cart = new Cart(req.session.cart);
     let newcart = new Cart({
-        user: req.session.user,
-        cart: cart,
+        user: req.body.user,
+        product: req.body.products,
         date: '2020-02-02'
     });
     newcart.save()
