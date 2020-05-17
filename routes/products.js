@@ -131,7 +131,7 @@ router.post('/update/:id', (req, res, next) => {
 //     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
 //     Product.findById(productID)
-//         .then(item => {
+//         .then(item => { 
 //             cart.add(item, item.id, weight);
 //             req.session.cart = cart;
 //             console.log(req.session.cart);

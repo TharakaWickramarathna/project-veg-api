@@ -3,9 +3,9 @@ const router = express.Router();
 
 const Cart = require('../models/cart');
 
-router.get('/details', (req, res, next) => {
+router.get('/view', (req, res, next) => {
     Cart.find()
-        .then((cart) => console.log(cart))
+        .then((cart) => res.json(cart))
         .catch((err) => {
             res.status(400).json({
                 success: 'false',
