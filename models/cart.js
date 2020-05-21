@@ -5,7 +5,7 @@ const CartSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    cart: {
+    product: {
         type: Object,
         require: true
     },
@@ -14,6 +14,7 @@ const CartSchema = mongoose.Schema({
         default: 'currentDate'
     }
 });
+
 
 const Cart = module.exports = mongoose.model('Cart', CartSchema);
 

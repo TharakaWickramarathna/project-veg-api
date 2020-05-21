@@ -3,28 +3,28 @@ const router = express.Router();
 const multer = require('multer');
 
 const storage = multer.diskStorage({
-    destination: function(req,file,cb){
-        cb(null,'./uploads');
+    destination: function(req, file, cb) {
+        cb(null, './uploads');
     },
-    filename: function(req,file,cb){
+    filename: function(req, file, cb) {
         cb(null, file.originalname);
     }
 });
 
-const fileFilter = (req,file,cb)=>{
-    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
-    }else{
+    } else {
         cb(null, false)
     }
 };
 
 const upload = multer({
     storage: storage,
-    limits:{
+    limits: {
         fileSize: 1024 * 1024 * 2
     },
-    fileFilter:fileFilter
+    fileFilter: fileFilter
 
 });
 
@@ -33,7 +33,7 @@ const Cart = require('../models/cart');
 
 
 //insert a new product
-router.post('/add',upload.single('productImage'), (req, res, next) => {
+router.post('/add', upload.single('productImage'), (req, res, next) => {
     console.log(req.file)
 
     let newProduct = new Product({
@@ -42,7 +42,7 @@ router.post('/add',upload.single('productImage'), (req, res, next) => {
         minimumOrder: req.body.minimumOrder,
         category: req.body.category,
         availability: req.body.availability,
-        imgSrc : req.file.path
+        imgSrc: req.file.path
     });
 
     newProduct.save()
@@ -107,7 +107,7 @@ router.post('/update/:id', (req, res, next) => {
             product.category = req.body.category;
             product.availability = req.body.availability;
             product.imgSrc = req.body.imgSrc
-        
+
             product.save()
                 .then(() => {
                     res.status(201).json({
@@ -125,50 +125,32 @@ router.post('/update/:id', (req, res, next) => {
 });
 
 // items added to cart one be one
-router.post('/add-to-cart/:id/:weight', (req, res, next) => {
-    let productID = req.params.id;
-    let weight = req.params.weight;
-    console.log(productID);
-    var cart = new Cart(req.session.cart ? req.session.cart : {});
+// router.post('/add-to-cart/:id/:weight', (req, res, next) => {
+//     let productID = req.params.id;
+//     let weight = req.params.weight;
+//     console.log(productID);
+//     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-    Product.findById(productID)
-        .then(item => {
-            cart.add(item, item.id, weight);
-            req.session.cart = cart;
-            console.log(req.session.cart);
-        })
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: err
-            });
-        });
-
-
+//     Product.findById(productID)
+//         .then(item => { 
+//             cart.add(item, item.id, weight);
+//             req.session.cart = cart;
+//             console.log(req.session.cart);
+//         })
+//         .catch((err) => {
+//             res.status(400).json({
+//                 success: 'false',
+//                 msg: err
+//             });
+//         });
 
 
-    // function(err, product) {
-    // if (err) throw err; //can be redirect product page
 
-    // cart.add(product, product.id, weight);
-    // req.session.cart = cart;
-    // localStorage.setItem
-    // res.json(cart);
-    // console.log(cart);
-    // });
-
-    // let userid = req.session.user.id;
-    // var cartItem = new Cart({
-    //     user: req.session.user,
-    //     cart: req.session.cart,
-    //     date: '2015-02-02'
-    // });
-    // cartItem.find({} ,{ user: userid, cart:  })
+//         var client = req.body.client;
+//         var products = req.body.product;
 
 
-    // let cartDetails = cart.itemDetails();
-
-});
+// });
 
 router.get('/cart-view', (req, res, next) => {
     var cart = req.session.cart;
