@@ -35,6 +35,7 @@ const Cart = require('../models/cart');
 //insert a new product
 router.post('/add',upload.single('productImage'), (req, res, next) => {
     console.log(req.file)
+
     let newProduct = new Product({
         productName: req.body.productName,
         unitPrice: req.body.unitPrice,
