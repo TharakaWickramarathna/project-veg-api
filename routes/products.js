@@ -91,7 +91,7 @@ router.get('/:id', async (req, res, next) => {
     
 });
 
-
+//Delete a Product by the ID 
 router.delete('/:id', async(req,res,next)=>{
     try {
         const getProduct = await Product.findById(req.params.id);
@@ -111,6 +111,7 @@ router.delete('/:id', async(req,res,next)=>{
 
 });
 
+//Update Product ID
 router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,res,next)=>{
     try{
         
@@ -131,63 +132,19 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
     }
 })
 
-router.post('/update/:id', (req, res, next) => {
-    Product.findById(req.params.id)
-        .then((product) => {
-            product.productName = req.body.productName;
-            product.unitPrice = req.body.unitPrice;
-            product.minimumOrder = req.body.minimumOrder;
-            product.category = req.body.category;
-            product.availability = req.body.availability;
-            product.imgSrc = req.body.imgSrc
+//Edit Product Information
+router.patch('/update/:id', async(req,res,next)=>{
 
-            product.save()
-                .then(() => {
-                    res.status(201).json({
-                        success: 'true',
-                        msg: 'Product Updated Success.!'
-                    });
-                })
-        })
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: 'Updated Failed.!'
-            });
-        })
-});
-
-// items added to cart one be one
-// router.post('/add-to-cart/:id/:weight', (req, res, next) => {
-//     let productID = req.params.id;
-//     let weight = req.params.weight;
-//     console.log(productID);
-//     var cart = new Cart(req.session.cart ? req.session.cart : {});
-
-//     Product.findById(productID)
-//         .then(item => { 
-//             cart.add(item, item.id, weight);
-//             req.session.cart = cart;
-//             console.log(req.session.cart);
-//         })
-//         .catch((err) => {
-//             res.status(400).json({
-//                 success: 'false',
-//                 msg: err
-//             });
-//         });
-
-
-
-//         var client = req.body.client;
-//         var products = req.body.product;
-
-
-// });
-
-// router.get('/cart-view', (req, res, next) => {
-//     var cart = req.session.cart;
-//     res.json(cart);
-// })
-
+    const updateProduct = await Product.updateOne({_id: req.params.id},{
+        $set: {
+            productName : req.body.productName,
+            unitPrice : req.body.unitPrice,
+            minimumOrder : req.body.minimumOrder,
+            category : req.body.category,
+            availability : req.body.availability
+                  }
+                
+    })
+    res.json('Successfullly Edited')
+})
 module.exports = router;
