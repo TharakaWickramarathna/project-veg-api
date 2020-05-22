@@ -119,7 +119,7 @@ router.delete('/:id', async(req,res,next)=>{
 
 });
 
-//Update Product ID
+//Update Product Image
 router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,res,next)=>{
     try{
         
@@ -143,15 +143,15 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
 //Edit Product Information Accepts any kind of Product Object
 router.patch('/update/:id', async(req,res,next)=>{
     try{
-        const keys = Object.keys(req.body);
-        const values = Object.values(req.body);
-        const passObject={};
-        for (var i = 0; i<keys.length;i++){
-            const key = keys[i];
-            const value = values[i];
-            passObject[key] = value;
-        }
-
+        // const keys = Object.keys(req.body);
+        // const values = Object.values(req.body);
+        // const passObject={};
+        // for (var i = 0; i<keys.length;i++){
+        //     const key = keys[i];
+        //     const value = values[i];
+        //     passObject[key] = value;
+        // }
+        const passObject = hero.createUpdateObject(req.body);
         const updateProduct = await Product.updateOne({_id: req.params.id},
             {$set: passObject})
     res.status(200).json('Successfullly Edited')

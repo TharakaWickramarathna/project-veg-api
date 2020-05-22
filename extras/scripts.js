@@ -92,7 +92,21 @@ function productGetElement(inputArray){
     return result;
 }
 
+function createUpdateObject(requestBody){
+    let item= requestBody;
+    const keys = Object.keys(item);
+    const values = Object.values(item);
+    const passObject={};
+        for (var i = 0; i<keys.length;i++){
+            const key = keys[i];
+            const value = values[i];
+            passObject[key] = value;
+        }
+    return passObject; 
+}
+
 module.exports.getAmountOfThePack = getAmountOfThePack;
 module.exports.generateObject = generateObject;
 module.exports.generateObjectS = generateObjectS;
 module.exports.productGetElement = productGetElement;
+module.exports.createUpdateObject = createUpdateObject;
