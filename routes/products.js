@@ -142,17 +142,23 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
 
 //Edit Product Information
 router.patch('/update/:id', async(req,res,next)=>{
+    try{
+        const keys = Object.keys(req.body);
+        const values = Object.values(req.body);
+        const passObject={};
+        for (var i = 0; i<keys.length;i++){
+            const key = keys[i];
+            const value = values[i];
+            passObject[key] = value;
+        }
 
-        const updateProduct = await Product.updateOne({_id: req.params.id},{
-        $set: {
-            productName : req.body.productName,
-            unitPrice : req.body.unitPrice,
-            minimumOrder : req.body.minimumOrder,
-            category : req.body.category,
-            availability : req.body.availability
-                  }
-                
-    })
-    res.json('Successfullly Edited')
+        const updateProduct = await Product.updateOne({_id: req.params.id},
+            {$set: passObject})
+    res.status(200).json('Successfullly Edited')
+    }
+
+    catch(err){
+        res.status(404).json({message: err})
+    }
 })
 module.exports = router;
