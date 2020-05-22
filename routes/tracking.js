@@ -57,14 +57,16 @@ router.delete('/:trackID', async(req,res,next)=>{
 //Edit the Status of A Tracking ID:
 router.patch('/edit/:id', async(req,res,next)=>{
     try {
-        const status = req.body.status;
+        // const status = req.body.status;
         const passObject = hero.createUpdateObject(req.body);
         const updateTracking = await Tracking.updateOne({_id: req.params.id},
-            {$set: passObject})
-        res.status(200).json('Successfullly Edited')
-        }
-        
+            {$set: passObject});
+        res.status(200).json('Successfullly Edited');
     } catch (err) {
-        res.status(404).json({message: err});
+        res.status(404).json({message : err});
     }
+        
+        
+        
+    
 });
