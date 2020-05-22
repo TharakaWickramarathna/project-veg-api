@@ -140,7 +140,7 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
     }
 })
 
-//Edit Product Information
+//Edit Product Information Accepts any kind of Product Object
 router.patch('/update/:id', async(req,res,next)=>{
     try{
         const keys = Object.keys(req.body);
