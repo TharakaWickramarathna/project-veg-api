@@ -65,18 +65,22 @@ router.post('/add', upload.single('productImage'), (req, res, next) => {
 //Fetch all the products Result is an object array
 
 router.get('/all', async(req, res, next) => {
-
+try{
     const product = await Product.find()
     const finalResult = hero.productGetElement(product);
 
-    res.json(finalResult)
+    res.status(200).json(finalResult)
+}catch(err){
+    res.status(404).json({message: err});
+}
+    
 
 });
 
 //Get product by id result is a single object
 
 router.get('/:id', async (req, res, next) => {
-
+try{
     const product= await Product.findById(req.params.id);
     const imageSource= './uploads/'+product.imgSrc;
     res.json({
@@ -88,6 +92,10 @@ router.get('/:id', async (req, res, next) => {
         availability : product.availability,
         imgSrc : imageSource
     })
+}catch (err){
+    res.status(404).json({message:err})
+}
+    
     
 });
 
@@ -102,11 +110,11 @@ router.delete('/:id', async(req,res,next)=>{
         })
 
         const deletedProduct = await Product.deleteOne({ _id: req.params.id });
-        res.json({message: 'Successfully Deleted'});
+        res.status(201).json({message: 'Successfully Deleted'});
 
 
     } catch (err) {
-        res.json({ message: err });
+        res.status(404).json({ message: err });
     }
 
 });
@@ -135,7 +143,7 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
 //Edit Product Information
 router.patch('/update/:id', async(req,res,next)=>{
 
-    const updateProduct = await Product.updateOne({_id: req.params.id},{
+        const updateProduct = await Product.updateOne({_id: req.params.id},{
         $set: {
             productName : req.body.productName,
             unitPrice : req.body.unitPrice,
