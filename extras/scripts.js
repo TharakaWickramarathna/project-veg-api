@@ -51,7 +51,7 @@ function generateObjectS(fromThisArray, amountList) {
         var amount = amountList[num];
         let discountAmount = (listItem.discount/100) * amount;
         let total = amount - discountAmount;
-        listItem={
+        var listItem={
             availability: listItem.availability,
             _id: listItem._id,
             name: listItem.name,
@@ -69,6 +69,30 @@ function generateObjectS(fromThisArray, amountList) {
     
 }
 
+//Image Source and Product creation in product.js
+
+function productGetElement(inputArray){
+
+    var result =[];
+    inputArray.forEach(product =>{
+        let num = inputArray.indexOf(product);
+        const imageSource= './uploads/'+product.imgSrc;
+        var item ={
+            _id: product._id,
+            productName: product.productName,
+            unitPrice : product.unitPrice,
+            minimumOrder : product.minimumOrder,
+            category: product.category,
+            availability : product.availability,
+            imgSrc : imageSource
+        }
+        
+        result[num] = item;
+    })
+    return result;
+}
+
 module.exports.getAmountOfThePack = getAmountOfThePack;
 module.exports.generateObject = generateObject;
 module.exports.generateObjectS = generateObjectS;
+module.exports.productGetElement = productGetElement;
