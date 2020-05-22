@@ -1,0 +1,111 @@
+[33mcommit 769d5adb091dd1c30345761280500ac6a3288651[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: TharakaWickramarathna <TharakaWic11027@gmail.com>
+Date:   Sun May 17 21:09:49 2020 +0530
+
+    cart all done
+
+[33mcommit 11327c2fa655b1500b6ee021d4b957591aa78452[m
+Author: TharakaWickramarathna <TharakaWic11027@gmail.com>
+Date:   Sun May 17 20:17:10 2020 +0530
+
+    save to cart
+
+[33mcommit ea2e3cabea7da97f6e21f27d6a74f4d986c63655[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Wed May 13 23:58:12 2020 +0530
+
+    image uploading with multer
+
+[33mcommit 9aabb79e268df313390eede1dc99515fc1efd8a8[m
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Sun May 10 21:13:01 2020 +0530
+
+    imagesrc
+
+[33mcommit 291b020a7ac01119608c439476d0b742dd8f275f[m
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Sat May 9 18:56:40 2020 +0530
+
+    n
+
+[33mcommit 7b8073da90c9da345d5f81365096ec0757c6ab78[m
+Merge: de270a5 3f0d337
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Sat May 9 16:38:30 2020 +0530
+
+    Merge branch 'master' of https://github.com/TharakaWickramarathna/project-veg-api
+
+[33mcommit 3f0d337cc2e2777edda32bcf44c0ab82bfe5c370[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 16:27:51 2020 +0530
+
+    discount and others added
+
+[33mcommit de270a5ccfa5b74856309ba6e526d18a5a8e2130[m
+Merge: 9c3215e 7ccaade
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Fri May 8 16:21:28 2020 +0530
+
+    Merge branch 'master' of https://github.com/TharakaWickramarathna/project-veg-api
+
+[33mcommit 7ccaade6a895157666439b23d12c581d0491b9f6[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 16:18:17 2020 +0530
+
+    Hero Script Cleaned, and no Errors
+
+[33mcommit 9c3215e22a6740f5365718fa0933c42ac904bb4f[m
+Merge: 0cc32ba 573863f
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Fri May 8 15:24:44 2020 +0530
+
+    Merge branch 'master' of https://github.com/TharakaWickramarathna/project-veg-api
+
+[33mcommit 573863f9911c335f8d218d4740b20b3b323b4460[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 15:13:13 2020 +0530
+
+    price re worked
+
+[33mcommit e3db1b7a87d4b08a31a9626fdab7ddded6f85e05[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 15:00:15 2020 +0530
+
+    changed hero script
+
+[33mcommit 0cc32ba3c62a311d7f95fc85ca055e06191a3afe[m
+Merge: 791e09d e8d4a7a
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Fri May 8 13:52:09 2020 +0530
+
+    Merge branch 'master' of https://github.com/TharakaWickramarathna/project-veg-api
+
+[33mcommit 791e09d27f64a094361c0ab8eac75e8dec624084[m
+Author: udithaabeykoon <udithaedu@gmail.com>
+Date:   Fri May 8 13:51:34 2020 +0530
+
+    yes s.
+
+[33mcommit e8d4a7a9d42f51066054c3facf5f71fbef20bd56[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 13:47:09 2020 +0530
+
+    changed params of getproductbyName function
+
+[33mcommit bf7267576b162d6221593bd1cd7110bed8677e0a[m
+Author: Rathindu <rathinduwathsala@gmail.com>
+Date:   Fri May 8 13:43:23 2020 +0530
+
+    Product Schema Updated and made changes in route
+
+[33mcommit 9df52118e1fbbbef01c0bcd6a470e74bae609716[m
+Author: TharakaWickramarathna <TharakaWic11027@gmail.com>
+Date:   Thu May 7 22:26:09 2020 +0530
+
+    both servers combined
+
+[33mcommit 33fd5b026356378640496c151f6b65a6ec225bb1[m
+Author: TharakaWickramarathna <Tharakawic11027@gmail.com>
+Date:   Thu May 7 22:23:56 2020 +0530
+
+    Initial commit

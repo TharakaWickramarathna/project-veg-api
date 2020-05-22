@@ -70,7 +70,7 @@ router.get('/profile', function(req, res, next) {
 router.get('/all', (req, res, next) => {
     User.find()
         .then((users) => {
-            res.status(400).json({
+            res.status(100).json({
                 success: 'true',
                 msg: users
             });

@@ -123,37 +123,6 @@ router.post('/update/:id', (req, res, next) => {
         })
 });
 
-// items added to cart one be one
-// router.post('/add-to-cart/:id/:weight', (req, res, next) => {
-//     let productID = req.params.id;
-//     let weight = req.params.weight;
-//     console.log(productID);
-//     var cart = new Cart(req.session.cart ? req.session.cart : {});
 
-//     Product.findById(productID)
-//         .then(item => { 
-//             cart.add(item, item.id, weight);
-//             req.session.cart = cart;
-//             console.log(req.session.cart);
-//         })
-//         .catch((err) => {
-//             res.status(400).json({
-//                 success: 'false',
-//                 msg: err
-//             });
-//         });
-
-
-
-//         var client = req.body.client;
-//         var products = req.body.product;
-
-
-// });
-
-router.get('/cart-view', (req, res, next) => {
-    var cart = req.session.cart;
-    res.json(cart);
-})
 
 module.exports = router;

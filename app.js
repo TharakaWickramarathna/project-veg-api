@@ -30,10 +30,11 @@ const app = express();
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
-app.use('/uploads',express.static('uploads'));
+app.use('/uploads', express.static('uploads'));
 
 const users = require('./routes/users')
 const products = require('./routes/products');
+const cart = require('./routes/cart');
 const suggestedListRoute = require('./routes/suggestedList');
 const favouriteListRoute = require('./routes/favouriteList');
 
@@ -47,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // express session middleware
 app.use(session({
@@ -63,7 +64,7 @@ app.use(session({
 // routers
 app.use('/users', users);
 app.use('/product', products);
-app.use('/cart', require('./routes/cart'));
+app.use('/cart', cart);
 app.use('/suggestedlist', suggestedListRoute);
 app.use('/favouritelist', favouriteListRoute);
 
