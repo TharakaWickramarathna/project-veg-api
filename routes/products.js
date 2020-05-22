@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-
+const Product = require('../models/products')
+const fs= require('fs');
+const hero = require('../extras/scripts')
+//Multer Things
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, './uploads');
     },
     filename: function(req, file, cb) {
-        cb(null, file.originalname);
+        cb(null,  new Date().toISOString().replace(/:/g, '-')+ file.originalname);
     }
 });
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
-    } else {
+    } else { 
         cb(null, false)
     }
 };
@@ -28,22 +31,22 @@ const upload = multer({
 
 });
 
-const Product = require('../models/products');
-const Cart = require('../models/cart');
 
 
 //insert a new product
 router.post('/add', upload.single('productImage'), (req, res, next) => {
-    console.log(req.file)
+
+    
     let newProduct = new Product({
         productName: req.body.productName,
         unitPrice: req.body.unitPrice,
         minimumOrder: req.body.minimumOrder,
         category: req.body.category,
         availability: req.body.availability,
-        imgSrc: req.file.path
+        imgSrc: req.file.filename
     });
-
+    
+  
     newProduct.save()
         .then(() => {
             res.status(201).json({
@@ -59,70 +62,107 @@ router.post('/add', upload.single('productImage'), (req, res, next) => {
         });
 });
 
-router.get('/all', (req, res, next) => {
-    Product.find()
-        .then((products) => res.json(products))
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: err
-            });
-        });
+//Fetch all the products Result is an object array
+
+router.get('/all', async(req, res, next) => {
+try{
+    const product = await Product.find()
+    const finalResult = hero.productGetElement(product);
+
+    res.status(200).json(finalResult)
+}catch(err){
+    res.status(404).json({message: err});
+}
+    
+
 });
 
-router.get('/:id', (req, res, next) => {
-    Product.findById(req.params.id)
-        .then(product => res.json(product))
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: err
-            });
-        });
+<<<<<<< HEAD
+
+=======
+//Get product by id result is a single object
+
+router.get('/:id', async (req, res, next) => {
+try{
+    const product= await Product.findById(req.params.id);
+    const imageSource= './uploads/'+product.imgSrc;
+    res.json({
+        _id: product._id,
+        productName: product.productName,
+        unitPrice : product.unitPrice,
+        minimumOrder : product.minimumOrder,
+        category: product.category,
+        availability : product.availability,
+        imgSrc : imageSource
+    })
+}catch (err){
+    res.status(404).json({message:err})
+}
+    
+    
 });
 
-router.delete('/:id', (req, res, next) => {
-    Product.findByIdAnd(req.params.id)
-        .then(() => {
-            res.status(201).json({
-                success: 'true',
-                msg: 'Delete Success.!'
-            })
+//Delete a Product by the ID 
+router.delete('/:id', async(req,res,next)=>{
+    try {
+        const getProduct = await Product.findById(req.params.id);
+        const filePath = './uploads/'+getProduct.imgSrc;
+
+        fs.unlink(filePath, (err, data) =>{
+            if (err) throw err
         })
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: 'Failed Registration.!'
-            });
-        })
+
+        const deletedProduct = await Product.deleteOne({ _id: req.params.id });
+        res.status(201).json({message: 'Successfully Deleted'});
+
+
+    } catch (err) {
+        res.status(404).json({ message: err });
+    }
+
 });
 
-router.post('/update/:id', (req, res, next) => {
-    Product.findById(req.params.id)
-        .then((product) => {
-            product.productName = req.body.productName;
-            product.unitPrice = req.body.unitPrice;
-            product.minimumOrder = req.body.minimumOrder;
-            product.category = req.body.category;
-            product.availability = req.body.availability;
-            product.imgSrc = req.body.imgSrc
-
-            product.save()
-                .then(() => {
-                    res.status(201).json({
-                        success: 'true',
-                        msg: 'Product Updated Success.!'
-                    });
-                })
+//Update Product Image
+router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,res,next)=>{
+    try{
+        
+        const getMatchingProduct = await Product.findById(req.params.id);
+        const imageSrc= './uploads/'+getMatchingProduct.imgSrc;
+        fs.unlink(imageSrc, (err,data)=>{
+            if (err) throw err
         })
-        .catch((err) => {
-            res.status(400).json({
-                success: 'false',
-                msg: 'Updated Failed.!'
-            });
+        const imgSource = req.file.filename;
+        const updateProduct = await Product.updateOne({_id: req.params.id},{
+            $set:{
+                imgSrc: imgSource
+            }
         })
-});
+        res.json('Successfully Edited')
+    }catch(err) {
+        res.json({message: err})
+    }
+})
+>>>>>>> 44eab76cb07cede915e05df0db72e23f95837d63
 
+//Edit Product Information Accepts any kind of Product Object
+router.patch('/update/:id', async(req,res,next)=>{
+    try{
+        // const keys = Object.keys(req.body);
+        // const values = Object.values(req.body);
+        // const passObject={};
+        // for (var i = 0; i<keys.length;i++){
+        //     const key = keys[i];
+        //     const value = values[i];
+        //     passObject[key] = value;
+        // }
+        const passObject = hero.createUpdateObject(req.body);
+        const updateProduct = await Product.updateOne({_id: req.params.id},
+            {$set: passObject})
+    res.status(200).json('Successfullly Edited')
+    }
 
-
+    catch(err){
+        res.status(404).json({message: err})
+    }
+})
 module.exports = router;
