@@ -4,9 +4,9 @@ const router = express.Router();
 const Cart = require('../models/cart');
 const Products = require('../models/products');
 
-router.get('/view', async(req, res, next) => {
+router.get('/view/:clientID', async(req, res, next) => {
 
-    var userid = req.body.id;
+    var userid = req.params.clientID;
     //output object
     var completeCart = {
         clientId: userid,
