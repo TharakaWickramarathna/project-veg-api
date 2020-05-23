@@ -77,9 +77,6 @@ try{
 
 });
 
-<<<<<<< HEAD
-
-=======
 //Get product by id result is a single object
 
 router.get('/:id', async (req, res, next) => {
@@ -142,19 +139,11 @@ router.patch('/updateProductImage/:id', upload.single('productImage'),async(req,
         res.json({message: err})
     }
 })
->>>>>>> 44eab76cb07cede915e05df0db72e23f95837d63
 
 //Edit Product Information Accepts any kind of Product Object
 router.patch('/update/:id', async(req,res,next)=>{
     try{
-        // const keys = Object.keys(req.body);
-        // const values = Object.values(req.body);
-        // const passObject={};
-        // for (var i = 0; i<keys.length;i++){
-        //     const key = keys[i];
-        //     const value = values[i];
-        //     passObject[key] = value;
-        // }
+       
         const passObject = hero.createUpdateObject(req.body);
         const updateProduct = await Product.updateOne({_id: req.params.id},
             {$set: passObject})
