@@ -1,17 +1,65 @@
 const mongoose = require('mongoose');
 
+const ProductListItem = mongoose.Schema({
+    _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    quantity:{
+        type: Number,
+        required: true
+    },
+    totalPricePerItem: {
+        type: Number,
+        required: true
+    },
+    isPack:{
+        type: String,
+        required: true,
+        default: 'v'
+    }
+})
+
 const order = mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, require: true },
-    products = { type: Object, require: true },
-    orderAmount: { type: Number, require: true },
-    deliveryCharges: { type: Number, require: true },
-    commission: { type: Number, require: true },
-    totalAmount: { type: Number, require: true },
-    orderNature: { type: String, require: true },
-    contactno: { type: String, require: true },
-    deliveryAddress: { type: String, require: true },
-    date: { type: Date, default: Date.now },
-    status: { type: String, require: true }
+    _id: mongoose.Schema.Types.ObjectId,
+    clientID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users',
+        required: true
+    },
+    date:{
+        type: date,
+        default: Date.now
+    },
+    orderAmount:{
+        type: Number,
+        required: true
+    },
+    deliveryCharges:{
+        type: Number,
+        required: true
+    },
+    commision:{
+        type: Number,
+        required: true
+    },
+    totalAmount:{
+        type: Number,
+        required: true
+    },
+    natureOfOrder:{
+        type:String,
+        required: true,
+        default: 'Same Day'
+    },
+    statusOfCompletion: {
+        type: String,
+        required: true,
+        default: 'Pending Approval'
+    },
+    product:[ProductListItem]
+
+
 
 });
 
