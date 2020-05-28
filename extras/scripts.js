@@ -1,4 +1,5 @@
 const _ = require('underscore');
+const Product = require('../models/products')
 
 //Generate Amount of the Pack
 
@@ -105,8 +106,20 @@ function createUpdateObject(requestBody){
     return passObject; 
 }
 
+//For Order seperation of Products = v | SuggestedPacks = p | FavouritePacks = u
+function orderSeperation(productListItem){
+   const groupedResult=  _.groupBy(productListItem,item=>{
+       return item.isPack;
+   } );
+   return groupedResult;
+}
+
+//create different functions for final output generation
+
+
 module.exports.getAmountOfThePack = getAmountOfThePack;
 module.exports.generateObject = generateObject;
 module.exports.generateObjectS = generateObjectS;
 module.exports.productGetElement = productGetElement;
 module.exports.createUpdateObject = createUpdateObject;
+module.exports.orderSeperation = orderSeperation;

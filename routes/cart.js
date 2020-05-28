@@ -6,9 +6,10 @@ const Products = require('../models/products');
 const suggestedList = require('../models/suggestedList');
 const favouriteList = require('../models/favouriteList');
 
-router.get('/view', async(req, res, next) => {
 
-    var userid = req.body.id;
+router.get('/view/:clientID', async(req, res, next) => {
+
+    var userid = req.params.clientID;
     //output object
     var completeCart = {
         clientId: userid,
