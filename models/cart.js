@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 
+const sug = require('./suggestedList');
+
 const CartItem = mongoose.Schema({
     productId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId || sug.Types.ObjectId,
         ref: 'Product',
+        // ref: 'Product',
+
         required: true
     },
     quantity: {
@@ -15,7 +19,7 @@ const CartItem = mongoose.Schema({
         required: true
     }
 
-})
+});
 
 const CartSchema = mongoose.Schema({
 
@@ -23,7 +27,7 @@ const CartSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    product: [CartItem],
+    product: [CartItem], // || [sug],
 
     date: {
         type: Date,
