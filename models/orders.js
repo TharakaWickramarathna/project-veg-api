@@ -28,7 +28,7 @@ const order = mongoose.Schema({
         required: true
     },
     date:{
-        type: date,
+        type: Date,
         default: Date.now
     },
     orderAmount:{
@@ -63,4 +63,4 @@ const order = mongoose.Schema({
 
 });
 
-const order = module.exports = mongoose.model('Order', order);
+module.exports = mongoose.model('Order', order);
