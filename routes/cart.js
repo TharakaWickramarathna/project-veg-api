@@ -6,9 +6,10 @@ const Products = require('../models/products');
 const suggestedList = require('../models/suggestedList');
 const favouriteList = require('../models/favouriteList');
 
-router.get('/view', async(req, res, next) => {
 
-    var userid = req.body.id;
+router.get('/view/:clientID', async(req, res, next) => {
+
+    var userid = req.params.clientID;
     //output object
     var completeCart = {
         clientId: userid,
@@ -60,7 +61,11 @@ router.get('/view', async(req, res, next) => {
                 };
                 productCount++;
             } else if (carts.product[i].isPack == "u") {
+<<<<<<< HEAD
                 const fav = await favouriteList.findById(carts.product[i].productId).populate("products._id");
+=======
+                const fav = await favouriteList.findById(carts.product[i].productId); //.populate("products._id");
+>>>>>>> 420a349ef53be890fdb956ab2419013bd84f01a8
                 fav.products.forEach(items => {
                     const favedValue = (items._id.unitPrice / items._id.minimumOrder) * items.quantity;
                     userPackCost += favedValue;
