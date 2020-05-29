@@ -1,5 +1,7 @@
 const _ = require('underscore');
 const Product = require('../models/products')
+const mongoose = require('mongoose');
+const Order = require('../models/orders');
 
 //Generate Amount of the Pack
 
@@ -139,7 +141,31 @@ function orderSeperation(productListItem){
    return groupedResult;
 }
 
-//create different functions for final output generation
+//Create final order object to save in the database
+function orderObject(requestBody,vegetableArray, suggestedPackArray, favouritePackArray, orderTotal){
+    this.requestBody =requestBody;
+    this.suggestedPackArray = suggestedPackArray;
+    this.favouritePackArray = favouritePackArray;
+    this.orderTotal =orderTotal;
+    var commision = 10;
+    var deliveryCharges = 100;
+    var totalAmount = (orderTotal * (100+commision)/100) + deliveryCharges;
+    const order = new Order({
+        _id: new mongoose.Types.ObjectId,
+        clientID : requestBody.clientID,
+        date: requestBody.date,
+        orderAmount : orderTotal,
+        deliveryCharges : deliveryCharges,
+        commision : commision,
+        totalAmount : totalAmount,
+        natureOfOrder : requestBody.natureOfOrder,
+        statusofCompletion: requestBody.statusofCompletion,
+        vegetables : vegetableArray,
+        featuredPacks : suggestedPackArray,
+        userPacks : favouritePackArray
+    })
+    return order;
+}
 
 
 module.exports.getAmountOfThePack = getAmountOfThePack;
@@ -148,3 +174,4 @@ module.exports.generateObjectS = generateObjectS;
 module.exports.productGetElement = productGetElement;
 module.exports.createUpdateObject = createUpdateObject;
 module.exports.orderSeperation = orderSeperation;
+module.exports.orderObject = orderObject;

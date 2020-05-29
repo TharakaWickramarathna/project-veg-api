@@ -5,20 +5,6 @@ const Tracking = require('../models/tracking');
 const Order = require('../models/orders');
 const hero = require('../extras/scripts');
 
-//Add a new Tracking Element
-router.post('/add', async(req,res,next)=>{
-    const track = new Tracking({
-        _id: mongoose.Types.ObjectId,
-        orderID: req.body.orderID,
-        status: req.body.status
-    })
-    try {
-        const trackPost = await track.save();
-        res.status(200).json({message: 'Succesfully Created The Tracking'})
-    } catch (err) {
-        res.status(404).json({message : err})
-    }
-});
 
 //View All the Tracking Information
 router.get('/all', async(req,res, next)=>{
@@ -35,7 +21,7 @@ router.get('/all', async(req,res, next)=>{
 router.get('/:orderID', async(req,res,next)=>{
     
 try {
-    const orderTrack = await Tracking.find({clientID: req.params.clientID});
+    const orderTrack = await Tracking.find({orderID: req.params.orderID});
     res.status(200).json(orderTrack);
 } catch (err) {
     res.status(404).json({message: err})
@@ -57,11 +43,26 @@ router.delete('/:trackID', async(req,res,next)=>{
 //Edit the Status of A Tracking ID:
 router.patch('/edit/:id', async(req,res,next)=>{
     try {
-        // const status = req.body.status;
-        const passObject = hero.createUpdateObject(req.body);
+        const status = req.body.status;
+        
+        
+        if(status.toLowerCase() != 'completed'){const getTrackingDetails = await Tracking.findById({_id : req.params.id});
+        const orderID = getTrackingDetails.orderID;
+        const editOrder = await Order.updateOne({_id : orderID}, {
+            $set:{
+                statusOfCompletion : status
+            }
+        })
+        
+        
         const updateTracking = await Tracking.updateOne({_id: req.params.id},
-            {$set: passObject});
-        res.status(200).json('Successfullly Edited');
+            {$set: {status : status}});
+        
+        res.status(200).json('Successfullly Edited');}
+        else{
+            const deleteTrackingRecord = await Tracking.deleteOne({_id : req.params.id});
+            res.status(200).json('Successfully Deleted')
+        }
     } catch (err) {
         res.status(404).json({message : err});
     }
@@ -70,3 +71,7 @@ router.patch('/edit/:id', async(req,res,next)=>{
         
     
 });
+
+
+
+module.exports = router;

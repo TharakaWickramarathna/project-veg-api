@@ -2,14 +2,14 @@ const mongoose = require('mongoose');
 
 const ProductListItem = mongoose.Schema({
     _id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Object,
         required: true
     },
     quantity:{
         type: Number,
         required: true
     },
-    totalPricePerItem: {
+    pricePerItem: {
         type: Number,
         required: true
     },
@@ -19,6 +19,25 @@ const ProductListItem = mongoose.Schema({
         default: 'v'
     }
 })
+const PackListItem = mongoose.Schema({
+    _id :{
+        type: Object,
+        required: true
+    },
+    quantity : {
+        type : Number,
+        required : true
+    },
+    isPack : {
+        type : String,
+        required : true
+    },
+    packAmount: {
+        type : Number,
+        required : true
+    }
+})
+
 
 const order = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
@@ -57,7 +76,9 @@ const order = mongoose.Schema({
         required: true,
         default: 'Pending Approval'
     },
-    product:[ProductListItem]
+    vegetables:[ProductListItem],
+    featuredPacks : [PackListItem],
+    userPacks : [PackListItem]
 
 
 

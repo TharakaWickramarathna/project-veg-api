@@ -1,11 +1,13 @@
 //Express and Router Variables
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 //Underscore JS
 const _ = require('underscore')
 //Require DB Models
-const Orders = require('../models/orders')
+const Tracking = require('../models/tracking')
+const Order = require('../models/orders')
 const Product = require('../models/products')
 const SuggestedList = require('../models/suggestedList');
 const FavouriteList = require('../models/favouriteList');
@@ -67,8 +69,15 @@ router.post('/add', async(req,res,next)=>{
     
     totalAmount = vegetableTotal+suggestedPackTotal+favouritePackTotal;
     
-    console.log(totalAmount)
-    
+   const order = hero.orderObject(orderDetails,vegetables,suggestedPackDetails,favouritePackDetails,totalAmount);
+    const saveTheOrder = await order.save();
+    const createTheTracking = new Tracking({
+        _id : new mongoose.Types.ObjectId,
+        orderID : order._id,
+        status : 'Pending Approval'
+    })
+    const saveTracking = await createTheTracking.save();
+    res.json({message : 'Order Saved'})    
 
     
     
@@ -85,8 +94,35 @@ router.post('/add', async(req,res,next)=>{
 
 });
 
+//Get all the orders
+router.get('/all', async(req,res,next)=>{
+    
+    try {
+        const allOrders = await Order.find();
+        res.status(201).json(allOrders)
+        
+    } catch (err) {
+        res.status(404).json({message : err})
+    }
+    
+
+});
+
+//Get Orders By a certain Client
+router.get('/:clientID', async(req,res,next)=>{
+    try {
+        const orderByClient = await Order.find({clientID : req.params.clientID});
+        res.status(201).json(orderByClient)
+    } catch (err) {
+        res.status(404).json({message : err})
+    }
+})
+
 module.exports = router;
 
+
+// Structure of the Request Obect
+// natureOfOrder : 'Scheduled' maybe added in the future
 // {
 //     "clientID":"5ea91de10f61de375c8775b5",
 //     "products":[
