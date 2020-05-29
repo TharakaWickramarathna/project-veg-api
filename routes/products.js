@@ -68,16 +68,6 @@ router.get('/all', async(req, res, next) => {
     try {
         const product = await Product.find()
         const finalResult = hero.productGetElement(product);
-<<<<<<< HEAD
-
-        res.status(200).json(finalResult)
-    } catch (err) {
-        res.status(404).json({ message: err });
-    }
-
-
-});
-=======
 
         res.status(200).json(finalResult)
     } catch (err) {
@@ -85,7 +75,6 @@ router.get('/all', async(req, res, next) => {
     }
 });
 
->>>>>>> 420a349ef53be890fdb956ab2419013bd84f01a8
 
 //Get product by id result is a single object
 
@@ -153,18 +142,6 @@ router.patch('/updateProductImage/:id', upload.single('productImage'), async(req
 //Edit Product Information Accepts any kind of Product Object
 router.patch('/update/:id', async(req, res, next) => {
     try {
-<<<<<<< HEAD
-        // const keys = Object.keys(req.body);
-        // const values = Object.values(req.body);
-        // const passObject={};
-        // for (var i = 0; i<keys.length;i++){
-        //     const key = keys[i];
-        //     const value = values[i];
-        //     passObject[key] = value;
-        // }
-=======
-
->>>>>>> 420a349ef53be890fdb956ab2419013bd84f01a8
         const passObject = hero.createUpdateObject(req.body);
         const updateProduct = await Product.updateOne({ _id: req.params.id }, { $set: passObject })
         res.status(200).json('Successfullly Edited')

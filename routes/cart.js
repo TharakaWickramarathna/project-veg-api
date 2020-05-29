@@ -51,7 +51,7 @@ router.get('/view/:clientID', async(req, res, next) => {
                 suggestPackCount++;
                 // res.json(suggested);
             } else if (carts.product[i].isPack == "v") {
-                const pro = await Products.findById(carts.product[i].productId); //.populate("products._id");
+                const pro = await Products.findById(carts.product[i].productId);
                 const productValue = (pro.unitPrice / pro.minimumOrder) * carts.product[i].quantity;
                 productCost += productValue;
                 productArr[productCount] = {
@@ -61,11 +61,7 @@ router.get('/view/:clientID', async(req, res, next) => {
                 };
                 productCount++;
             } else if (carts.product[i].isPack == "u") {
-<<<<<<< HEAD
                 const fav = await favouriteList.findById(carts.product[i].productId).populate("products._id");
-=======
-                const fav = await favouriteList.findById(carts.product[i].productId); //.populate("products._id");
->>>>>>> 420a349ef53be890fdb956ab2419013bd84f01a8
                 fav.products.forEach(items => {
                     const favedValue = (items._id.unitPrice / items._id.minimumOrder) * items.quantity;
                     userPackCost += favedValue;
