@@ -39,6 +39,7 @@ const suggestedListRoute = require('./routes/suggestedList');
 const favouriteListRoute = require('./routes/favouriteList');
 const ordersRoute = require('./routes/orders');
 const trackingRoute = require('./routes/tracking')
+const completedOrdersRoute = require('./routes/completedOrder');
 
 // Port Number
 const PORT = process.env.PORT || 5000;
@@ -71,6 +72,7 @@ app.use('/suggestedlist', suggestedListRoute);
 app.use('/favouritelist', favouriteListRoute);
 app.use('/orders',ordersRoute);
 app.use('/tracking' , trackingRoute);
+app.use('/completedorders' , completedOrdersRoute);
 
 // index route
 app.get('/', (req, res, next) => {

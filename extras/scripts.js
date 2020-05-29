@@ -2,6 +2,7 @@ const _ = require('underscore');
 const Product = require('../models/products')
 const mongoose = require('mongoose');
 const Order = require('../models/orders');
+const CompletedOrder = require('../models/completedOrders')
 
 //Generate Amount of the Pack
 
@@ -167,6 +168,25 @@ function orderObject(requestBody,vegetableArray, suggestedPackArray, favouritePa
     return order;
 }
 
+function completedOrderObject(order){
+    this.order = order;
+
+    const completedOrder = new CompletedOrder({
+        _id: new mongoose.Types.ObjectId,
+        clientID : order.clientID,
+        orderAmount : order.orderAmount,
+        deliveryCharges : order.deliveryCharges,
+        commision : order.commision,
+        totalAmount : order.totalAmount,
+        natureOfOrder : order.natureOfOrder,
+        vegetables : order.vegetables,
+        featuredPacks : order.featuredPacks,
+        userPacks : order.userPacks
+
+    })
+    return completedOrder
+}
+
 
 module.exports.getAmountOfThePack = getAmountOfThePack;
 module.exports.generateObject = generateObject;
@@ -175,3 +195,4 @@ module.exports.productGetElement = productGetElement;
 module.exports.createUpdateObject = createUpdateObject;
 module.exports.orderSeperation = orderSeperation;
 module.exports.orderObject = orderObject;
+module.exports.completedOrderObject = completedOrderObject;

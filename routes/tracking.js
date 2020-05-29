@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Tracking = require('../models/tracking');
 const Order = require('../models/orders');
 const hero = require('../extras/scripts');
+const CompletedOrder = require('../models/completedOrders');
 
 
 //View All the Tracking Information
@@ -46,13 +47,15 @@ router.patch('/edit/:id', async(req,res,next)=>{
         const status = req.body.status;
         
         
-        if(status.toLowerCase() != 'completed'){const getTrackingDetails = await Tracking.findById({_id : req.params.id});
+        
+        const getTrackingDetails = await Tracking.findById({_id : req.params.id});
         const orderID = getTrackingDetails.orderID;
+        if(status.toLowerCase() != 'completed'){
         const editOrder = await Order.updateOne({_id : orderID}, {
             $set:{
                 statusOfCompletion : status
             }
-        })
+        });
         
         
         const updateTracking = await Tracking.updateOne({_id: req.params.id},
@@ -61,6 +64,10 @@ router.patch('/edit/:id', async(req,res,next)=>{
         res.status(200).json('Successfullly Edited');}
         else{
             const deleteTrackingRecord = await Tracking.deleteOne({_id : req.params.id});
+            const order = await Order.findById(orderID);
+            const deleteOrder = await Order.deleteOne({_id : orderID});
+            const completedOrderObject = hero.completedOrderObject(order);
+            const saveCompletedOrder = await completedOrderObject.save();
             res.status(200).json('Successfully Deleted')
         }
     } catch (err) {
