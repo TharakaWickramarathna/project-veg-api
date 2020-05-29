@@ -23,8 +23,10 @@ function getAmountOfThePack(resultingArrayFromTheDB) {
 
 //Favourite List Final Object Generation
 
-function generateObject(fromThisArray, amountList) {
+function generateObject(fromThisArray, amountList,original =[]) {
     var result = [];
+    this.original = original;
+    var totalPackAmount = 0;
     fromThisArray.forEach((listItem)=>{
         let num = fromThisArray.indexOf(listItem);
         listItem ={
@@ -37,16 +39,28 @@ function generateObject(fromThisArray, amountList) {
             amount: amountList[num]
 
         }
+        if(original.length !=0){
+            var pack = original[num]
+            pack._id = listItem
+            var singlePackAmount = listItem.amount*pack.quantity
+            pack.packAmount = singlePackAmount;
+            totalPackAmount += singlePackAmount
+        }
         result[num] = listItem;
     });
+    if(original.length != 0){
+        return [original, totalPackAmount];
+    }
     
     return result;
 }
 
 //Suggested List Final Output Generation
 
-function generateObjectS(fromThisArray, amountList) {
+function generateObjectS(fromThisArray, amountList, original=[]) {
     var result = [];
+    var totalPackAmount =0;
+    this.original = original;
     fromThisArray.forEach((listItem)=>{
         let num = fromThisArray.indexOf(listItem);
         var amount = amountList[num];
@@ -63,9 +77,20 @@ function generateObjectS(fromThisArray, amountList) {
             discountAmount : discountAmount,
             total: total
         }
+        if(original.length != 0){
+            var pack =  original[num] 
+            pack._id = listItem
+            var singlePackAmount = listItem.total*pack.quantity;
+            pack.packAmount = singlePackAmount;
+            totalPackAmount += singlePackAmount
+        }  
         result[num]= listItem;
 
-    });    
+    });  
+    if(original.length !=0){
+        return [original,totalPackAmount]
+    }
+    
     return result;
     
 }
