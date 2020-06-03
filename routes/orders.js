@@ -11,9 +11,30 @@ const Order = require('../models/orders')
 const Product = require('../models/products')
 const SuggestedList = require('../models/suggestedList');
 const FavouriteList = require('../models/favouriteList');
+const CompletedOrder = require('../models/completedOrders');
 
 //Hero Script for external Functions
 const hero = require('../extras/scripts')
+
+router.get('/' , async(req,res,next)=>{
+    
+    try {
+        const statusOfOrder = req.query.status;
+        if(statusOfOrder != 'completed'){
+        const result = await Order.find({statusOfCompletion : statusOfOrder});
+        res.status(201).json(result);
+        }else{
+            const result = await CompletedOrder.find();
+            res.status(201).json(result);
+        }
+
+        
+    } catch (err) {
+        res.status(404).json({message: err})
+    }
+    
+
+})
 
 router.post('/add', async(req,res,next)=>{
 
@@ -52,6 +73,7 @@ router.post('/add', async(req,res,next)=>{
         suggestedPackDetails = finalOutput[0];
         suggestedPackTotal = finalOutput[1]
         
+        
     }else{
 
     }
@@ -59,6 +81,7 @@ router.post('/add', async(req,res,next)=>{
     if(favouritePacks){
         const favouritePackIDs = _.pluck(favouritePacks,'_id');
         const resutltFavouritePacks = await FavouriteList.find({'_id':{$in : favouritePackIDs}}).populate('products._id');
+        
         const amountOfthePacks = hero.getAmountOfThePack(resutltFavouritePacks);
         const finalOutput = hero.generateObject(resutltFavouritePacks,amountOfthePacks, favouritePacks);
         favouritePackDetails = finalOutput[0];
@@ -70,7 +93,8 @@ router.post('/add', async(req,res,next)=>{
     totalAmount = vegetableTotal+suggestedPackTotal+favouritePackTotal;
     
    const order = hero.orderObject(orderDetails,vegetables,suggestedPackDetails,favouritePackDetails,totalAmount);
-    const saveTheOrder = await order.save();
+   console.log(order.featuredPacks[0]._id.products) 
+   const saveTheOrder = await order.save();
     const createTheTracking = new Tracking({
         _id : new mongoose.Types.ObjectId,
         orderID : order._id,

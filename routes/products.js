@@ -81,7 +81,7 @@ router.get('/all', async(req, res, next) => {
 router.get('/:id', async(req, res, next) => {
     try {
         const product = await Product.findById(req.params.id);
-        const imageSource = './uploads/' + product.imgSrc;
+        const imageSource = 'uploads/' + product.imgSrc;
         res.json({
             _id: product._id,
             productName: product.productName,

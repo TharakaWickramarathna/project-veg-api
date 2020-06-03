@@ -21,8 +21,7 @@ const ProductListItem = mongoose.Schema({
 })
 const PackListItem = mongoose.Schema({
     _id :{
-        type: Object,
-        required: true
+        
     },
     quantity : {
         type : Number,
