@@ -135,8 +135,21 @@ router.get('/all', async(req,res,next)=>{
 //Get Orders By a certain Client
 router.get('/:clientID', async(req,res,next)=>{
     try {
-        const orderByClient = await Order.find({clientID : req.params.clientID});
-        res.status(201).json(orderByClient)
+        const statusOfOrder = req.query.status;
+        if(statusOfOrder != 'completed'){
+        const result = await Order.find({clientID : req.params.clientID,statusOfCompletion : statusOfOrder});
+        if(result){res.status(201).json(result);}
+        else{
+            res.status(204).json({message : 'No matching records were found'})
+        }
+        }else{
+            const result = await CompletedOrder.find({clientID : req.params.clientID});
+            if(result){res.status(201).json(result);}
+        else{
+            res.status(204).json({message : 'No matching records were found'})
+        }
+        }
+       
     } catch (err) {
         res.status(404).json({message : err})
     }
