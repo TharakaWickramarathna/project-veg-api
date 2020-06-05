@@ -74,8 +74,6 @@ router.post('/add', async(req,res,next)=>{
         suggestedPackTotal = finalOutput[1]
         
         
-    }else{
-
     }
     //Favourite Packs - User Packs (Getting Results from the DB and then modify it)
     if(favouritePacks){
@@ -92,8 +90,8 @@ router.post('/add', async(req,res,next)=>{
     
     totalAmount = vegetableTotal+suggestedPackTotal+favouritePackTotal;
     
-   const order = hero.orderObject(orderDetails,vegetables,suggestedPackDetails,favouritePackDetails,totalAmount);
-   console.log(order.featuredPacks[0]._id.products) 
+   var order = hero.orderObject(orderDetails,vegetables,suggestedPackDetails,favouritePackDetails,totalAmount);
+    
    const saveTheOrder = await order.save();
     const createTheTracking = new Tracking({
         _id : new mongoose.Types.ObjectId,
