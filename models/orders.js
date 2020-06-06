@@ -5,7 +5,7 @@ const ProductListItem = mongoose.Schema({
         type: Object,
         required: true
     },
-    quantity:{
+    quantity: {
         type: Number,
         required: true
     },
@@ -13,27 +13,44 @@ const ProductListItem = mongoose.Schema({
         type: Number,
         required: true
     },
-    isPack:{
+    isPack: {
         type: String,
         required: true,
         default: 'v'
     }
 })
 const PackListItem = mongoose.Schema({
-    _id :{
-        
+    _id: {
+        type: Object
     },
-    quantity : {
-        type : Number,
-        required : true
+    quantity: {
+        type: Number,
+        required: true
     },
-    isPack : {
-        type : String,
-        required : true
+    isPack: {
+        type: String,
+        required: true
     },
     packAmount: {
-        type : Number,
-        required : true
+        type: Number,
+        required: true
+    }
+})
+const SugPackListItem = mongoose.Schema({
+    _id: {
+        type: Object
+    },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    isPack: {
+        type: String,
+        required: true
+    },
+    packAmount: {
+        type: Number,
+        required: true
     }
 })
 
@@ -45,28 +62,28 @@ const order = mongoose.Schema({
         ref: 'Users',
         required: true
     },
-    date:{
+    date: {
         type: Date,
         default: Date.now
     },
-    orderAmount:{
+    orderAmount: {
         type: Number,
         required: true
     },
-    deliveryCharges:{
+    deliveryCharges: {
         type: Number,
         required: true
     },
-    commision:{
+    commision: {
         type: Number,
         required: true
     },
-    totalAmount:{
+    totalAmount: {
         type: Number,
         required: true
     },
-    natureOfOrder:{
-        type:String,
+    natureOfOrder: {
+        type: String,
         required: true,
         default: 'Same Day'
     },
@@ -75,9 +92,9 @@ const order = mongoose.Schema({
         required: true,
         default: 'Pending Approval'
     },
-    vegetables:[ProductListItem],
-    featuredPacks : [PackListItem],
-    userPacks : [PackListItem]
+    vegetables: [ProductListItem],
+    featuredPacks: [SugPackListItem],
+    userPacks: [PackListItem]
 
 
 
